@@ -1,0 +1,33 @@
+{
+  // The play button in "Run and Debug" (or F5): build, flash, run,
+  // and show the defmt log in the Debug Console.
+  // Needs the probe-rs Debugger extension (probe-rs.probe-rs-debugger).
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flash & run",
+      "type": "probe-rs-debug",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      // tasks.json: `cargo build` before flashing
+      "preLaunchTask": "cargo build",
+      "chip": "STM32H753ZITx",
+      "flashingConfig": {
+        "flashingEnabled": true,
+        // false: start running right away, like `cargo run`.
+        // true: stop at the reset handler, to step from the very first instruction.
+        "haltAfterReset": false
+      },
+      "coreConfigs": [
+        {
+          "coreIndex": 0,
+          // cargo names the ELF after the package in Cargo.toml
+          "programBinary": "${workspaceFolder}/target/thumbv7em-none-eabihf/debug/nucleo-h753-rust",
+          // show the defmt log (sent over RTT) in the Debug Console
+          "rttEnabled": true
+        }
+      ],
+      "consoleLogLevel": "Console"
+    }
+  ]
+}

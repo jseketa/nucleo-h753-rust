@@ -1,0 +1,19 @@
+{
+  // Check the code for the chip, not for the PC. Without this, rust-analyzer
+  // reports bogus errors on #![no_std] / #![no_main].
+  "rust-analyzer.cargo.target": "thumbv7em-none-eabihf",
+
+  // Don't build tests: a no_std crate can't, it would fail with
+  // "can't find crate for `test`".
+  "rust-analyzer.check.allTargets": false,
+
+  // Run clippy (the linter) on save instead of plain `cargo check`;
+  // its hints show up as squiggles.
+  "rust-analyzer.check.command": "clippy",
+
+  // Format Rust files with rustfmt on every save.
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer",
+    "editor.formatOnSave": true
+  }
+}
