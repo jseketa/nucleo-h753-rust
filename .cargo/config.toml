@@ -15,7 +15,7 @@ target = "thumbv7em-none-eabihf"
 # to find chip names, run:
 # probe-rs chip list | grep H753
 runner = "probe-rs run --chip STM32H753ZITx"
-runflags = [
+rustflags = [
 # don't pad sections to page boundaries to save flash
 # required when memory regions aren't 64 KiB-aligned
 	"-C", "link-arg=--nmagic",
@@ -31,7 +31,7 @@ runflags = [
 [env]
 # the log level filtered at compile time
 # messages below the level aren't compiled in at all
-# if not set, only error! is printed
+# if not set, only info! and above is printed
 # trace prints everything
 # defmt log levels and what they are used for:
 # error		defmt::error!	something failed

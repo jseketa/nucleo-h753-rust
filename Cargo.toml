@@ -22,7 +22,7 @@ edition = "2024"
 # - only safe on a single core
 cortex-m = { version = "0.7.9", features = ["inline-asm", "critical-section-single-core"] }
 # ROLE: vector table, reset handler, #[entry], linker script link.x
-# C EQUIVALENT: startup_smt32h753xx.s and the .ld file
+# C EQUIVALENT: startup_stm32h753xx.s and the .ld file
 cortex-m-rt = "0.7.6"
 # ROLE: logging macros (info!, warn!...)
 # format strings stay on the PC, only an index and the values go over the wire
