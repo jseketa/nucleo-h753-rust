@@ -1,0 +1,43 @@
+# this file specifies how cargo behaves in this folder
+[build]
+# Explanation of the parts of the compiler
+# - thumb - Thumb-2 instruction set, the only Cortex-M has
+# - v7em - ARMv7E-M: Cortex-M4/M7 with DSP instructions
+# - none - no operating system
+# - eabi - ARM's calling convention
+# - hf - hard float
+#	- floats are passed in FPU registers
+#	- this target uses only the single-precision FPU
+#	- f64 runs in software even though the M7 in the H753 could do it in hardware
+target = "thumbv7em-none-eabihf"
+
+[target.thumbv7em-none-eabihf]
+# to find chip names, run:
+# probe-rs chip list | grep H753
+runner = "probe-rs run --chip STM32H753ZITx"
+runflags = [
+# don't pad sections to page boundaries to save flash
+# required when memory regions aren't 64 KiB-aligned
+	"-C", "link-arg=--nmagic",
+# cortex-m-rt's linker script
+# places the vector table at the start of flash and includes YOUR memory.x
+# memory.x contains flash and RAM addresses
+	"-C", "link-arg=-Tlink.x",
+# defmt's script, puts the log format strings in a section that is not flashed
+# probe-rs reads the format strings from the ELF file
+	"-C", "link-arg=-Tdefmt.x",
+]
+
+[env]
+# the log level filtered at compile time
+# messages below the level aren't compiled in at all
+# if not set, only error! is printed
+# trace prints everything
+# defmt log levels and what they are used for:
+# error		defmt::error!	something failed
+# warn		defmt::warn!	something suspicious
+# info		defmt::info!	normal progress messages
+# debug		defmt::debug!	details for development
+# trace		defmt::trace!	very detailed, every step
+# off		-		no logging at all
+DEFMT_LOG = "trace"
