@@ -141,3 +141,11 @@ A: The address and the contents are different things. Address: `usize`, the inte
 pointer (32 bits on the M7, 64 on the PC), and the type Rust uses for offsets, indexes and sizes. Contents:
 `u32`, because the register is 32 bits wide. The pointer `*mut u32` joins them: "at this address lives a
 `u32`". C equivalent: `uintptr_t` vs `uint32_t`.
+
+**Q: Can constants and variables be defined outside `fn main`?**
+A: `const` and `static` yes, `let` no.
+- `const NAME: T = …;` top level fine, type required; pasted in where used, no address (`#define` with a type).
+- `static NAME: T = …;` one copy at a fixed address for the whole program (C global).
+- `static mut` every access is `unsafe`; avoid for now.
+- `let` only inside functions (local, on the stack).
+Register addresses: `const` at the top of the file.
