@@ -6,6 +6,5 @@ use panic_probe as _;
 
 #[cortex_m_rt::entry]
 fn main() -> ! {
-    defmt::info!("First message.");
     loop {}
 }
