@@ -14,7 +14,7 @@ fn main() -> ! {
     let rcc_ahb4_current_value: u32 = unsafe { core::ptr::read_volatile(rcc_ahb4enr_ptr) };
     defmt::info!(
         "Current value of the RCC_AHB4ENR register: {=u32:#010x}",
-        &rcc_ahb4_current_value
+        rcc_ahb4_current_value
     );
     loop {}
 }
